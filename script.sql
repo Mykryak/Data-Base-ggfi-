@@ -16,7 +16,7 @@ CREATE TABLE  vrsz
        inc_meas integer
      );
 /*****************************************************************************************************/
-CREATE TABLE  vrsz_meas
+CREATE TABLE  vrsz_measl
     (
       inc integer not null default nextval('vrsz_measinc'),
       nn    integer,
