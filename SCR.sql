@@ -12,7 +12,7 @@ CREATE TABLE  vrsz
        skor   real,
        ta   real,
        hw   real,
-       irain   real
+       irain   real,
        inc_meas integer
      );
 /*****************************************************************************************************/
