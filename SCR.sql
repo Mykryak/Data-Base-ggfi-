@@ -80,7 +80,32 @@ CREATE TABLE pgmd_meas
 /*----------------------------------------------------------------------------------------------------
 Discription: Table №4.
 ----------------------------------------------------------------------------------------------------*/
-
+create sequence prgs_coordinc start with 1 increment by 1;
+CREATE TABLE  prgs
+     (
+       inc integer not null default nextval('prgs_coordinc'),
+       lat1    real,
+       long1   real,
+       lat2    real,
+       long2   real,
+       datetime   timestamp,
+       skor   real,
+       ta   real,
+       hw   real,
+       irain   real,
+       prgs_meas integer
+     );
+/****************************************************************************************************/
+create sequence prgs_meas start with 1 increment by 1;
+CREATE TABLE  prgs_meas
+     (
+       inc integer not null default nextval('prgs_measinc'),
+       datetime timestamp,
+       dist   real,
+       hlzl    real,
+       hpr   real,
+       klost   real
+     );
 /*----------------------------------------------------------------------------------------------------
 Discription: Table №5.
 ----------------------------------------------------------------------------------------------------*/
