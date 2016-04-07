@@ -96,7 +96,7 @@ CREATE TABLE  prgs
        prgs_meas integer
      );
 /****************************************************************************************************/
-create sequence prgs_meas start with 1 increment by 1;
+create sequence prgs_measinc start with 1 increment by 1;
 CREATE TABLE  prgs_meas
      (
        inc integer not null default nextval('prgs_measinc'),
