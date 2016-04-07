@@ -109,6 +109,32 @@ CREATE TABLE  prgs_meas
 /*----------------------------------------------------------------------------------------------------
 Discription: Table №5.
 ----------------------------------------------------------------------------------------------------*/
+create sequence chan_coordinc start with 1 increment by 1;
+CREATE TABLE  chan
+  (
+    inc integer not null default nextval('chan_coordinc'),
+    lat    real,
+    long   real,
+    hgor   real,
+    datetimebeg   timestamp,
+    datetimeend   timestamp,
+    skor   real,
+    ta   real,
+    hw   real,
+    irain   real,
+    iship   real,
+    chan_meas integer
+  );
+/****************************************************************************************************/
+create sequence chan_measinc start with 1 increment by 1;
+CREATE TABLE  chan_meas
+  (
+    inc integer not null default nextval('chan_measinc'),
+    nn    integer,
+    hgor   real,
+    frec   real,
+    pnois   real
+  );
 /*----------------------------------------------------------------------------------------------------
 Discription: Table №6.
 ----------------------------------------------------------------------------------------------------*/
