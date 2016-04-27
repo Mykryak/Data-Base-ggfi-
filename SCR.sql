@@ -29,7 +29,7 @@ CREATE TABLE  vrsz_meas
 Discription: Table №2.
 ------------------------------------------------------------------------------*/
 create sequence rmd_coordinc start with 1 increment by 1;
-CREATE TABLE rmd_coord
+CREATE TABLE rmd
   (
     inc integer NOT NULL DEFAULT nextval('rmd_coordinc'::regclass),
     lat real,
