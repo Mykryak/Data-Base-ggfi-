@@ -122,7 +122,8 @@ CREATE TABLE  chan_coord
     ta   real,
     hw   real,
     irain   real,
-    iship   real
+    iship   real,
+    nn    integer,
   );
 /******************************************************************************/
 --create sequence chan_measinc start with 1 increment by 1;
@@ -130,7 +131,6 @@ CREATE TABLE  chan_meas
   (
     --inc integer not null default nextval('chan_measinc'),
     chan_coord integer references chan_coord(inc),
-    nn    integer,
     hgor   real,
     frec   real,
     pnois   real
@@ -164,7 +164,8 @@ CREATE TABLE  ht_coord
     skor   real,
     ta   real,
     hw   real,
-    irain   real
+    irain   real,
+    nn    integer
   );
   /****************************************************************************/
 --create sequence ht_measinc start with 1 increment by 1;
@@ -172,7 +173,6 @@ CREATE TABLE  ht_meas
     (
       --inc integer not null default nextval('ht_measinc'),
       ht_coord integer references ht_coord(inc),
-      nn    integer,
       hgor   real,
       vstream   real,
       kstream   real
