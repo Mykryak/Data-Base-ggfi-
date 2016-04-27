@@ -28,10 +28,10 @@ CREATE TABLE  vrsz_meas
 /*------------------------------------------------------------------------------
 Discription: Table №2.
 ------------------------------------------------------------------------------*/
-create sequence rmd_coordinc start with 1 increment by 1;
+--create sequence rmd_coordinc start with 1 increment by 1;
 CREATE TABLE rmd
   (
-    inc integer NOT NULL DEFAULT nextval('rmd_coordinc'::regclass),
+    --inc integer NOT NULL DEFAULT nextval('rmd_coordinc'::regclass),
     lat real,
     "long" real,
     datetime timestamp without time zone,
@@ -93,8 +93,7 @@ CREATE TABLE  prgs_coord
        skor   real,
        ta   real,
        hw   real,
-       irain   real,
-       prgs_meas integer
+       irain   real
      );
 /******************************************************************************/
 --create sequence prgs_measinc start with 1 increment by 1;
@@ -102,7 +101,6 @@ CREATE TABLE  prgs_meas
      (
        --inc integer not null default nextval('prgs_measinc'),
        prgs_coord integer references prgs_coord(inc),
-       datetime timestamp,
        dist   real,
        hlzl    real,
        hpr   real,
@@ -124,8 +122,7 @@ CREATE TABLE  chan_coord
     ta   real,
     hw   real,
     irain   real,
-    iship   real,
-    chan_meas integer
+    iship   real
   );
 /******************************************************************************/
 --create sequence chan_measinc start with 1 increment by 1;
@@ -167,8 +164,7 @@ CREATE TABLE  ht_coord
     skor   real,
     ta   real,
     hw   real,
-    irain   real,
-    ht_meas integer
+    irain   real
   );
   /****************************************************************************/
 --create sequence ht_measinc start with 1 increment by 1;
