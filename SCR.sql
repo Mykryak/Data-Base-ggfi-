@@ -13,7 +13,8 @@ CREATE TABLE  vrsz_coord
     skor   real,
     ta   real,
     hw   real,
-    irain   real
+    irain   real,
+    nn    integer
   );
 /******************************************************************************/
 --create sequence vrsz_measinc start with 1 increment by 1;
@@ -21,7 +22,6 @@ CREATE TABLE  vrsz_meas
   (
     --inc integer not null default nextval('vrsz_measinc'),
     vrsz_coord integer references vrsz_coord(inc),
-    nn    integer,
     hgor   real,
     zvuk   real
   );
@@ -41,6 +41,20 @@ CREATE TABLE rmd
 /*------------------------------------------------------------------------------
 Discription: Table №3.
 ------------------------------------------------------------------------------*/
+create sequence grndinc start with 1 increment by 1;
+CREATE TABLE grnd
+  (
+    inc integer NOT NULL DEFAULT nextval('grndinc'::regclass) primary key,
+    name character varying(50)
+  );
+/******************************************************************************/
+create sequence reflinc start with 1 increment by 1;
+CREATE TABLE refl
+  (
+    inc integer NOT NULL DEFAULT nextval('reflinc'::regclass) primary key,
+    refl real ARRAY[10]
+  );
+/******************************************************************************/
 create sequence pgmd_coordinc start with 1 increment by 1;
 CREATE TABLE pgmd_coord
   (
@@ -49,23 +63,9 @@ CREATE TABLE pgmd_coord
     "long" real,
     datetime timestamp without time zone,
     ide_inf integer,
-    grnd integer references grnd(name),
-    refl integer references refl(refl),
+    grnd integer references grnd(inc),
+    refl integer references refl(inc),
     ng integer
-  );
-/******************************************************************************/
---create sequence grndinc start with 1 increment by 1;
-CREATE TABLE grnd
-  (
-    --inc integer NOT NULL DEFAULT nextval('grndinc'::regclass),
-    name character varying(50) primary key
-  );
-/******************************************************************************/
---create sequence reflinc start with 1 increment by 1;
-CREATE TABLE refl
-  (
-    --inc integer NOT NULL DEFAULT nextval('reflinc'::regclass),
-    refl real ARRAY[10]
   );
 /******************************************************************************/
 --create sequence pgmd_measinc start with 1 increment by 1;
