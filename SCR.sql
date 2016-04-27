@@ -3,7 +3,7 @@ Create Author: Artem Gavrilov M.
 Discription: Table №1.
 ------------------------------------------------------------------------------*/
 create sequence vrsz_coordinc start with 1 increment by 1;
-CREATE TABLE  vrsz
+CREATE TABLE  vrsz_coord
   (
     inc integer not null default nextval('vrsz_coordinc') primary key,
     lat    real,
@@ -20,7 +20,7 @@ CREATE TABLE  vrsz
 CREATE TABLE  vrsz_meas
   (
     --inc integer not null default nextval('vrsz_measinc'),
-    vrsz_coord integer references vrsz_coordinc(inc),
+    vrsz_coord integer references vrsz_coord(inc),
     nn    integer,
     hgor   real,
     zvuk   real
@@ -29,7 +29,7 @@ CREATE TABLE  vrsz_meas
 Discription: Table №2.
 ------------------------------------------------------------------------------*/
 create sequence rmd_coordinc start with 1 increment by 1;
-CREATE TABLE rmd
+CREATE TABLE rmd_coord
   (
     inc integer NOT NULL DEFAULT nextval('rmd_coordinc'::regclass),
     lat real,
