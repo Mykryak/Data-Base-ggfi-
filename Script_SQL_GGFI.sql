@@ -177,6 +177,7 @@ CREATE TABLE ht_coord
   "long" real,
   datetimebeg timestamp without time zone,
   datetimeend timestamp without time zone,
+  hgor real,
   nn integer,
   skor real,
   ta real,
@@ -188,7 +189,6 @@ CREATE TABLE ht_coord
 CREATE TABLE ht_meas
 (
   ht_coord integer,
-  hgor real,
   vstream real,
   kstream real,
   CONSTRAINT ht_meas_ht_coord_fkey FOREIGN KEY (ht_coord)
