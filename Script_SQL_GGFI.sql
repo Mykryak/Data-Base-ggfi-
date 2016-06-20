@@ -13,7 +13,7 @@ CREATE TABLE vrsz_coord
   "long" real,
   datetime timestamp without time zone,
   ide_inf integer,
-  hgor real,
+  nn integer,
   skor real,
   ta real,
   hw real,
@@ -24,7 +24,7 @@ CREATE TABLE vrsz_coord
 CREATE TABLE vrsz_meas
 (
   vrsz_coord integer,
-  nn integer,
+  hgor real,
   zvuk real,
   CONSTRAINT vrsz_meas_vrsz_coord_fkey FOREIGN KEY (vrsz_coord)
       REFERENCES vrsz_coord (inc) MATCH SIMPLE
