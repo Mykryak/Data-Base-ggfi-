@@ -3,7 +3,7 @@
  Version: 3.0
  Discription: Table №1.
  -------------------------------------------------------------------------------*/
-CREATE DATABASE ggfi_beta
+CREATE DATABASE ggfi_beta;
  /*******************************************************************************/
 CREATE sequence vrsz_coordinc start with 1 increment by 1;
 CREATE TABLE vrsz_coord
