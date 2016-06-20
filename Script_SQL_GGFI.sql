@@ -13,6 +13,7 @@ CREATE TABLE vrsz_coord
   "long" real,
   datetime timestamp without time zone,
   ide_inf integer,
+  hgor real,
   skor real,
   ta real,
   hw real,
@@ -24,7 +25,6 @@ CREATE TABLE vrsz_meas
 (
   vrsz_coord integer,
   nn integer,
-  hgor real,
   zvuk real,
   CONSTRAINT vrsz_meas_vrsz_coord_fkey FOREIGN KEY (vrsz_coord)
       REFERENCES vrsz_coord (inc) MATCH SIMPLE
@@ -135,6 +135,7 @@ CREATE TABLE chan_coord
   hgor real,
   datetimebeg timestamp without time zone,
   datetimeend timestamp without time zone,
+  nn integer,
   skor real,
   ta real,
   hw real,
@@ -147,7 +148,6 @@ CREATE TABLE chan_coord
 CREATE TABLE chan_meas
 (
   chan_coord integer,
-  nn integer,
   hgor real,
   frec real,
   pnois real,
@@ -181,6 +181,7 @@ CREATE TABLE ht_coord
   "long" real,
   datetimebeg timestamp without time zone,
   datetimeend timestamp without time zone,
+  nn integer,
   skor real,
   ta real,
   hw real,
@@ -192,7 +193,6 @@ CREATE TABLE ht_coord
 CREATE TABLE ht_meas
 (
   ht_coord integer,
-  nn integer,
   hgor real,
   vstream real,
   kstream real,
