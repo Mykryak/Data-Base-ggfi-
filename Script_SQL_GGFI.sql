@@ -107,7 +107,6 @@ CREATE TABLE prgs_coord
   ta real,
   hw real,
   irain real,
-  prgs_meas integer,
   CONSTRAINT prgs_coord_pkey PRIMARY KEY (inc)
 );
 /******************************************************************************/
