@@ -113,7 +113,6 @@ CREATE TABLE prgs_coord
 CREATE TABLE prgs_meas
 (
   prgs_coord integer,
-  datetime timestamp without time zone,
   dist real,
   hlzl real,
   hpr real,
