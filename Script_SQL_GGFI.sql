@@ -139,7 +139,6 @@ CREATE TABLE chan_coord
   hw real,
   irain real,
   iship real,
-  chan_meas integer,
   CONSTRAINT chan_coord_pkey PRIMARY KEY (inc)
 );
 /******************************************************************************/
@@ -184,7 +183,6 @@ CREATE TABLE ht_coord
   ta real,
   hw real,
   irain real,
-  ht_meas integer,
   CONSTRAINT ht_coord_pkey PRIMARY KEY (inc)
 );
 /******************************************************************************/
