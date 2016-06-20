@@ -145,7 +145,6 @@ CREATE TABLE chan_coord
 CREATE TABLE chan_meas
 (
   chan_coord integer,
-  hgor real,
   frec real,
   pnois real,
   CONSTRAINT chan_meas_chan_coord_fkey FOREIGN KEY (chan_coord)
