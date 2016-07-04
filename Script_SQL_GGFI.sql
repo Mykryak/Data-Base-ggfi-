@@ -1,10 +1,20 @@
 /*------------------------------------------------------------------------------
  Create Author: Artem Gavrilov M.
- Version: 3.0
- Discription: Table №1.
- -------------------------------------------------------------------------------*/
+ Version: 3.1.5
+ Discription: SQL-запросы для создания таблиц БД ГГФИ
+ ------------------------------------------------------------------------------*/
 CREATE DATABASE ggfi_beta;
- /*******************************************************************************/
+/******************************************************************************/
+CREATE sequence ide_inf_seq start with 1 increment by 1;
+CREATE TABLE ide_inf
+(
+  inc integer NOT NULL DEFAULT nextval('ide_inf_seq'::regclass),
+  name character varying(255),
+  CONSTRAINT ide_inf_pkey PRIMARY KEY (inc )
+);
+/*------------------------------------------------------------------------------
+ Discription: Table №1.
+------------------------------------------------------------------------------*/
 CREATE sequence vrsz_coordinc start with 1 increment by 1;
 CREATE TABLE vrsz_coord
 (
@@ -18,7 +28,10 @@ CREATE TABLE vrsz_coord
   ta real,
   hw real,
   irain real,
-  CONSTRAINT vrsz_coord_pkey PRIMARY KEY (inc)
+  CONSTRAINT vrsz_coord_pkey PRIMARY KEY (inc ),
+  CONSTRAINT vrsz_coord_ide_inf_fkey FOREIGN KEY (ide_inf)
+      REFERENCES ide_inf (inc) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 /******************************************************************************/
 CREATE TABLE vrsz_meas
@@ -41,7 +54,10 @@ CREATE TABLE rmd
     "long" real,
     datetime timestamp without time zone,
     ide_inf integer,
-    depth real
+    depth real,
+    CONSTRAINT rmd_ide_inf_fkey FOREIGN KEY (ide_inf)
+        REFERENCES ide_inf (inc) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION
   );
 /*------------------------------------------------------------------------------
 -Discription: Table №3.
@@ -77,6 +93,9 @@ CREATE TABLE pgmd_coord
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT pgmd_coord_refl_fkey FOREIGN KEY (refl)
       REFERENCES refl (inc) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT pgmd_coord_ide_inf_fkey FOREIGN KEY (ide_inf)
+      REFERENCES ide_inf (inc) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 /******************************************************************************/
@@ -177,12 +196,16 @@ CREATE TABLE ht_coord
   "long" real,
   datetimebeg timestamp without time zone,
   datetimeend timestamp without time zone,
+  ide_inf integer,
   nn integer,
   skor real,
   ta real,
   hw real,
   irain real,
-  CONSTRAINT ht_coord_pkey PRIMARY KEY (inc)
+  CONSTRAINT ht_coord_pkey PRIMARY KEY (inc),
+  CONSTRAINT ht_coord_ide_inf_fkey FOREIGN KEY (ide_inf)
+      REFERENCES ide_inf (inc) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 /******************************************************************************/
 CREATE TABLE ht_meas
@@ -195,3 +218,4 @@ CREATE TABLE ht_meas
       REFERENCES ht_coord (inc) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+/******************************************************************************/
