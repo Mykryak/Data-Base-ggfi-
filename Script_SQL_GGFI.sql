@@ -4,7 +4,7 @@
  Discription: SQL-запросы для создания таблиц БД ГГФИ
 ------------------------------------------------------------------------------*/
 /*------------------------------------------------------------------------------
-Description: Создание базы данных.
+Discription: Создание базы данных.
 p.s. Выполнить отдельно!!!
 ------------------------------------------------------------------------------*/
 CREATE DATABASE ggfi_beta
@@ -23,7 +23,7 @@ CREATE TABLE ide_inf
   CONSTRAINT ide_inf_pkey PRIMARY KEY (inc )
 );
 /*------------------------------------------------------------------------------
- Description: Table №1.
+ Discription: Table №1.
 ------------------------------------------------------------------------------*/
 CREATE sequence vrsz_coordinc start with 1 increment by 1;
 CREATE TABLE vrsz_coord
@@ -54,7 +54,7 @@ CREATE TABLE vrsz_meas
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 /*------------------------------------------------------------------------------
-Description: Table №2.
+-Discription: Table №2.
 ------------------------------------------------------------------------------*/
 CREATE sequence rmd_coordinc start with 1 increment by 1;
 CREATE TABLE rmd
@@ -70,7 +70,7 @@ CREATE TABLE rmd
         ON UPDATE NO ACTION ON DELETE NO ACTION
   );
 /*------------------------------------------------------------------------------
-Description: Table №3.
+-Discription: Table №3.
 ------------------------------------------------------------------------------*/
 CREATE sequence grndinc start with 1 increment by 1;
 CREATE TABLE grnd
@@ -121,7 +121,7 @@ CREATE TABLE pgmd_meas
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 /*------------------------------------------------------------------------------
-Description: Table №4.
+-Discription: Table №4.
 ------------------------------------------------------------------------------*/
 CREATE sequence prgs_coordinc start with 1 increment by 1;
 CREATE TABLE prgs_coord
@@ -151,7 +151,7 @@ CREATE TABLE prgs_meas
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 /*------------------------------------------------------------------------------
-Description: Table №5.
+-Discription: Table №5.
 ------------------------------------------------------------------------------*/
 CREATE sequence chan_coordinc start with 1 increment by 1;
 CREATE TABLE chan_coord
@@ -181,7 +181,7 @@ CREATE TABLE chan_meas
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 /*------------------------------------------------------------------------------
-Description: Table №6.
+-Discription: Table №6.
 ------------------------------------------------------------------------------*/
 CREATE sequence pm_coordinc start with 1 increment by 1;
 CREATE TABLE  pm_coord
@@ -196,7 +196,7 @@ CREATE TABLE  pm_coord
     pmet   real
 );
 /*------------------------------------------------------------------------------
-Description: Table №7.
+-Discription: Table №7.
 ------------------------------------------------------------------------------*/
 CREATE sequence ht_coordinc start with 1 increment by 1;
 CREATE TABLE ht_coord
