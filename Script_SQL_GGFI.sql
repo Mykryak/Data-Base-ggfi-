@@ -15,18 +15,16 @@ CREATE DATABASE ggfi_beta
   LC_CTYPE = 'ru_RU.KOI8-R'
   CONNECTION LIMIT = -1;
 /******************************************************************************/
-CREATE sequence ide_inf_seq start with 1 increment by 1;
 CREATE TABLE ide_inf (
-  inc integer NOT NULL DEFAULT nextval('ide_inf_seq'::regclass),
+  inc serial NOT NULL,
   name character varying(255),
   CONSTRAINT ide_inf_pkey PRIMARY KEY (inc )
 );
 /*------------------------------------------------------------------------------
  Discription: Table №1.
 ------------------------------------------------------------------------------*/
-CREATE sequence vrsz_coordinc start with 1 increment by 1;
 CREATE TABLE vrsz_coord (
-  inc integer NOT NULL DEFAULT nextval('vrsz_coordinc'::regclass),
+  inc serial NOT NULL,
   lat real,
   "long" real,
   datetime timestamp without time zone,
@@ -53,9 +51,8 @@ CREATE TABLE vrsz_meas (
 /*------------------------------------------------------------------------------
 -Discription: Table №2.
 ------------------------------------------------------------------------------*/
-CREATE sequence rmd_coordinc start with 1 increment by 1;
 CREATE TABLE rmd (
-    inc integer NOT NULL DEFAULT nextval('rmd_coordinc'::regclass),
+    inc serial NOT NULL,
     lat real,
     "long" real,
     datetime timestamp without time zone,
@@ -68,56 +65,79 @@ CREATE TABLE rmd (
 /*------------------------------------------------------------------------------
 -Discription: Table №3.
 ------------------------------------------------------------------------------*/
-CREATE sequence grndinc start with 1 increment by 1;
-CREATE TABLE grnd (
-    inc integer NOT NULL DEFAULT nextval('grndinc'::regclass) primary key,
-    name character varying(50)
-  );
-/******************************************************************************/
-CREATE sequence reflinc start with 1 increment by 1;
-CREATE TABLE refl (
-    inc integer NOT NULL DEFAULT nextval('reflinc'::regclass) primary key,
-    refl real ARRAY[10]
-  );
-/******************************************************************************/
-create sequence pgmd_coordinc start with 1 increment by 1;
 CREATE TABLE pgmd_coord (
-  inc integer NOT NULL DEFAULT nextval('pgmd_coordinc'::regclass),
-  lat real,
-  "long" real,
-  datetime timestamp without time zone,
-  ide_inf integer,
-  grnd integer,
-  refl integer,
-  ng integer,
-  CONSTRAINT pgmd_coord_pkey PRIMARY KEY (inc),
-  CONSTRAINT pgmd_coord_grnd_fkey FOREIGN KEY (grnd)
-      REFERENCES grnd (inc) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT pgmd_coord_refl_fkey FOREIGN KEY (refl)
-      REFERENCES refl (inc) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT pgmd_coord_ide_inf_fkey FOREIGN KEY (ide_inf)
-      REFERENCES ide_inf (inc) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-);
+  inc       serial NOT NULL,
+  lat       real,
+  long      real,
+  datetime  timestamp WITHOUT TIME ZONE,
+  ide_inf   integer,
+  grnd      integer,
+  refl      integer,
+  ng        integer,
+  CONSTRAINT pgmd_coord_pkey
+    PRIMARY KEY (inc)
+  );
+/******************************************************************************/
+CREATE TABLE grnd_p (
+  inc      serial NOT NULL,
+  "name"   varchar(150),
+  grnd_id  integer NOT NULL DEFAULT 0,
+  CONSTRAINT grnd_pkey
+    PRIMARY KEY (inc),
+  CONSTRAINT foreign_key01
+    FOREIGN KEY (grnd_id)
+    REFERENCES grnd(grnd_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+  );
+/******************************************************************************/
+CREATE TABLE grnd (
+  grnd_id  serial NOT NULL,
+  name   varchar(50) NOT NULL,
+  CONSTRAINT grnd1_pkey
+    PRIMARY KEY (grnd_id)
+  );
+/******************************************************************************/
+CREATE TABLE refl (
+  inc    serial NOT NULL,
+  angle  real NOT NULL DEFAULT 0,
+  refl   real NOT NULL DEFAULT 0,
+  inc_i  integer NOT NULL DEFAULT 0,
+  CONSTRAINT refl_pkey
+    PRIMARY KEY (inc),
+  CONSTRAINT foreign_key01
+    FOREIGN KEY (inc_i)
+    REFERENCES pgmd_coord(inc)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+  );
 /******************************************************************************/
 CREATE TABLE pgmd_meas (
-  pgmd_coord integer,
-  hsl real,
-  zvuk real,
-  alf real,
-  ro real,
-  CONSTRAINT pgmd_meas_pgmd_coord_fkey FOREIGN KEY (pgmd_coord)
-      REFERENCES pgmd_coord (inc) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-);
+  pgmd_meas_id  serial NOT NULL,
+  pgmd_coord    integer,
+  hsl           real,
+  zvuk          real,
+  alf           real,
+  ro            real,
+  inc_p         integer,
+  CONSTRAINT pgmd_meas_pkey
+    PRIMARY KEY (pgmd_meas_id),
+  CONSTRAINT foreign_key01
+    FOREIGN KEY (inc_p)
+    REFERENCES grnd_p(inc)
+    ON UPDATE CASCADE,
+  CONSTRAINT pgmd_meas_pgmd_coord_fkey
+    FOREIGN KEY (pgmd_coord)
+    REFERENCES pgmd_coord(inc)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+  );
 /*------------------------------------------------------------------------------
 -Discription: Table №4.
 ------------------------------------------------------------------------------*/
 CREATE sequence prgs_coordinc start with 1 increment by 1;
 CREATE TABLE prgs_coord (
-  inc integer NOT NULL DEFAULT nextval('prgs_coordinc'::regclass),
+  inc serial NOT NULL,
   lat1 real,
   long1 real,
   lat2 real,
@@ -143,31 +163,40 @@ CREATE TABLE prgs_meas (
 /*------------------------------------------------------------------------------
 -Discription: Table №5.
 ------------------------------------------------------------------------------*/
-CREATE sequence chan_coordinc start with 1 increment by 1;
 CREATE TABLE chan_coord (
-  inc integer NOT NULL DEFAULT nextval('chan_coordinc'::regclass),
-  lat real,
-  "long" real,
-  hgor real,
-  datetimebeg timestamp without time zone,
-  datetimeend timestamp without time zone,
-  nn integer,
-  skor real,
-  ta real,
-  hw real,
-  irain real,
-  iship real,
-  CONSTRAINT chan_coord_pkey PRIMARY KEY (inc)
-);
+  inc          serial NOT NULL PRIMARY KEY,
+  lat          real NOT NULL,
+  long         real NOT NULL,
+  datetimebeg  timestamp WITHOUT TIME ZONE NOT NULL,
+  datetimeend  timestamp WITHOUT TIME ZONE NOT NULL,
+  nn           integer,
+  skor         real,
+  ta           real,
+  hw           real,
+  irain        real,
+  iship        real,
+  CONSTRAINT chan_coord_pkey
+    PRIMARY KEY (inc)
+  );
 /******************************************************************************/
 CREATE TABLE chan_meas (
-  chan_coord integer,
-  frec real,
-  pnois real,
-  CONSTRAINT chan_meas_chan_coord_fkey FOREIGN KEY (chan_coord)
-      REFERENCES chan_coord (inc) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-);
+  chan_coord_id  serial NOT NULL,
+  chan_coord     integer NOT NULL,
+  hgor           real,
+  nn             integer,
+  frec           real,
+  pnois          real,
+  CONSTRAINT chan_meas_pkey1
+    PRIMARY KEY (chan_coord_id),
+  CONSTRAINT foreign_key01
+    FOREIGN KEY (chan_coord)
+    REFERENCES chan_coord(inc)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+  );
+  CREATE UNIQUE INDEX chan_meas_index01
+  ON chan_meas
+  (chan_coord, hgor, frec);
 /*------------------------------------------------------------------------------
 -Discription: Table №6.
 ------------------------------------------------------------------------------*/
@@ -209,51 +238,61 @@ CREATE TABLE pm_coord_pmet (
   pmet      real,
   CONSTRAINT pm_coord_pmet_pkey PRIMARY KEY (inc_pmet),
   CONSTRAINT foreign_key01 FOREIGN KEY (inc)
-    REFERENCES public.pm_coord(inc)
+    REFERENCES pm_coord(inc)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT foreign_key02 FOREIGN KEY (inc_ns)
-    REFERENCES public.pm_coord_ns(inc_ns)
+    REFERENCES pm_coord_ns(inc_ns)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT foreign_key03 FOREIGN KEY (inc_nw)
-    REFERENCES public.pm_coord_nw(inc_nw)
+    REFERENCES pm_coord_nw(inc_nw)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT foreign_key04 FOREIGN KEY (inc_nr)
-    REFERENCES public.pm_coord_nr(inc_nr)
+    REFERENCES pm_coord_nr(inc_nr)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );
 /*------------------------------------------------------------------------------
 -Discription: Table №7.
 ------------------------------------------------------------------------------*/
-CREATE sequence ht_coordinc start with 1 increment by 1;
 CREATE TABLE ht_coord (
-  inc integer NOT NULL DEFAULT nextval('ht_coordinc'::regclass),
-  lat real,
-  "long" real,
-  datetimebeg timestamp without time zone,
-  datetimeend timestamp without time zone,
-  ide_inf integer,
-  nn integer,
-  skor real,
-  ta real,
-  hw real,
-  irain real,
-  CONSTRAINT ht_coord_pkey PRIMARY KEY (inc),
+  inc          serial NOT NULL PRIMARY KEY,
+  lat          real,
+  long         real,
+  datetimebeg  timestamp WITHOUT TIME ZONE,
+  datetimeend  timestamp WITHOUT TIME ZONE,
+  nn           integer,
+  skor         real,
+  ta           real,
+  hw           real,
+  irain        real,
+  ide_inf      real,
+  CONSTRAINT ht_coord_pkey
+    PRIMARY KEY (inc),
   CONSTRAINT ht_coord_ide_inf_fkey FOREIGN KEY (ide_inf)
-      REFERENCES ide_inf (inc) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-);
+    REFERENCES ide_inf (inc) MATCH SIMPLE
+    ON UPDATE NO ACTION ON DELETE NO ACTION
+  );
+
 /******************************************************************************/
 CREATE TABLE ht_meas (
-  ht_coord integer,
-  hgor real,
-  vstream real,
-  kstream real,
-  CONSTRAINT ht_meas_ht_coord_fkey FOREIGN KEY (ht_coord)
-      REFERENCES ht_coord (inc) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-);
+  ht_meas_id  serial NOT NULL,
+  ht_coord    integer,
+  nn          integer,
+  hgor        real,
+  vstream     real,
+  kstream     real,
+  CONSTRAINT ht_meas_pkey1
+    PRIMARY KEY (ht_meas_id),
+  CONSTRAINT foreign_key01
+    FOREIGN KEY (ht_coord)
+    REFERENCES ht_coord(inc)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+  );
+CREATE UNIQUE INDEX ht_meas_index01
+  ON ht_meas
+  (hgor, ht_coord);
 /******************************************************************************/
