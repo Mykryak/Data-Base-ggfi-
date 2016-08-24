@@ -173,6 +173,7 @@ CREATE TABLE chan_coord (
   skor         real,
   ta           real,
   hw           real,
+  hw2          real,
   irain        real,
   iship        real,
   CONSTRAINT chan_coord_pkey
