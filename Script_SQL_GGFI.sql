@@ -34,7 +34,7 @@ CREATE TABLE vrsz_coord (
   ta real,
   hw real,
   irain real,
-  CONSTRAINT vrsz_coord_pkey PRIMARY KEY (inc ),
+  CONSTRAINT vrsz_coord_pkey PRIMARY KEY (inc),
   CONSTRAINT vrsz_coord_ide_inf_fkey FOREIGN KEY (ide_inf)
       REFERENCES ide_inf (inc) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
@@ -78,24 +78,22 @@ CREATE TABLE pgmd_coord (
     PRIMARY KEY (inc)
   );
 /******************************************************************************/
+CREATE TABLE grnd (
+  inc_grnd  serial NOT NULL,
+  name   varchar(50) NOT NULL,
+  CONSTRAINT grnd1_pkey
+    PRIMARY KEY (inc_grnd)
+  );
+/******************************************************************************/
 CREATE TABLE grnd_p (
   inc      serial NOT NULL,
   "name"   varchar(150),
-  grnd_id  integer NOT NULL DEFAULT 0,
+  inc_grnd  integer NOT NULL DEFAULT 0,
   CONSTRAINT grnd_pkey
     PRIMARY KEY (inc),
   CONSTRAINT foreign_key01
-    FOREIGN KEY (grnd_id)
-    REFERENCES grnd(grnd_id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-  );
-/******************************************************************************/
-CREATE TABLE grnd (
-  grnd_id  serial NOT NULL,
-  name   varchar(50) NOT NULL,
-  CONSTRAINT grnd1_pkey
-    PRIMARY KEY (grnd_id)
+    FOREIGN KEY (inc_grnd)
+    REFERENCES grnd(inc_grnd)
   );
 /******************************************************************************/
 CREATE TABLE refl (
@@ -108,8 +106,6 @@ CREATE TABLE refl (
   CONSTRAINT foreign_key01
     FOREIGN KEY (inc_i)
     REFERENCES pgmd_coord(inc)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
   );
 /******************************************************************************/
 CREATE TABLE pgmd_meas (
@@ -129,13 +125,10 @@ CREATE TABLE pgmd_meas (
   CONSTRAINT pgmd_meas_pgmd_coord_fkey
     FOREIGN KEY (pgmd_coord)
     REFERENCES pgmd_coord(inc)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
   );
 /*------------------------------------------------------------------------------
 -Discription: Table №4.
 ------------------------------------------------------------------------------*/
-CREATE sequence prgs_coordinc start with 1 increment by 1;
 CREATE TABLE prgs_coord (
   inc serial NOT NULL,
   lat1 real,
@@ -164,7 +157,7 @@ CREATE TABLE prgs_meas (
 -Discription: Table №5.
 ------------------------------------------------------------------------------*/
 CREATE TABLE chan_coord (
-  inc          serial NOT NULL PRIMARY KEY,
+  inc          serial NOT NULL,
   lat          real NOT NULL,
   long         real NOT NULL,
   datetimebeg  timestamp WITHOUT TIME ZONE NOT NULL,
@@ -192,8 +185,6 @@ CREATE TABLE chan_meas (
   CONSTRAINT foreign_key01
     FOREIGN KEY (chan_coord)
     REFERENCES chan_coord(inc)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
   );
   CREATE UNIQUE INDEX chan_meas_index01
   ON chan_meas
@@ -239,27 +230,19 @@ CREATE TABLE pm_coord_pmet (
   pmet      real,
   CONSTRAINT pm_coord_pmet_pkey PRIMARY KEY (inc_pmet),
   CONSTRAINT foreign_key01 FOREIGN KEY (inc)
-    REFERENCES pm_coord(inc)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    REFERENCES pm_coord(inc),
   CONSTRAINT foreign_key02 FOREIGN KEY (inc_ns)
-    REFERENCES pm_coord_ns(inc_ns)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    REFERENCES pm_coord_ns(inc_ns),
   CONSTRAINT foreign_key03 FOREIGN KEY (inc_nw)
-    REFERENCES pm_coord_nw(inc_nw)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    REFERENCES pm_coord_nw(inc_nw),
   CONSTRAINT foreign_key04 FOREIGN KEY (inc_nr)
     REFERENCES pm_coord_nr(inc_nr)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
 );
 /*------------------------------------------------------------------------------
 -Discription: Table №7.
 ------------------------------------------------------------------------------*/
 CREATE TABLE ht_coord (
-  inc          serial NOT NULL PRIMARY KEY,
+  inc          serial NOT NULL,
   lat          real,
   long         real,
   datetimebeg  timestamp WITHOUT TIME ZONE,
@@ -269,14 +252,13 @@ CREATE TABLE ht_coord (
   ta           real,
   hw           real,
   irain        real,
-  ide_inf      real,
+  ide_inf      integer,
   CONSTRAINT ht_coord_pkey
     PRIMARY KEY (inc),
   CONSTRAINT ht_coord_ide_inf_fkey FOREIGN KEY (ide_inf)
     REFERENCES ide_inf (inc) MATCH SIMPLE
     ON UPDATE NO ACTION ON DELETE NO ACTION
   );
-
 /******************************************************************************/
 CREATE TABLE ht_meas (
   ht_meas_id  serial NOT NULL,
@@ -290,8 +272,6 @@ CREATE TABLE ht_meas (
   CONSTRAINT foreign_key01
     FOREIGN KEY (ht_coord)
     REFERENCES ht_coord(inc)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
   );
 CREATE UNIQUE INDEX ht_meas_index01
   ON ht_meas
