@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  Create Author: Artem Gavrilov M.
- Version: 3.2.5
+ Version: 3.2.6
  Discription: SQL-запросы для создания таблиц БД ГГФИ
 ------------------------------------------------------------------------------*/
 /*------------------------------------------------------------------------------
@@ -77,7 +77,9 @@ CREATE TABLE pgmd_coord (
   CONSTRAINT pgmd_coord_pkey
     PRIMARY KEY (inc),
   CONSTRAINT pgmd_coord_ide_inf_fkey FOREIGN KEY (ide_inf)
-    REFERENCES ide_inf (inc) MATCH SIMPLE
+    REFERENCES ide_inf (inc) MATCH SIMPLE,
+  CONSTRAINT pgmd_coord_grnd_fkey FOREIGN KEY (grnd)
+      REFERENCES grnd(inc_grnd) MATCH SIMPLE
   );
 /******************************************************************************/
 CREATE TABLE grnd (
