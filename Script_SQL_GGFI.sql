@@ -65,6 +65,13 @@ CREATE TABLE rmd (
 /*------------------------------------------------------------------------------
 -Discription: Table №3.
 ------------------------------------------------------------------------------*/
+CREATE TABLE grnd (
+  inc_grnd  serial NOT NULL,
+  name   varchar(50) NOT NULL,
+  CONSTRAINT grnd1_pkey
+    PRIMARY KEY (inc_grnd)
+  );
+/******************************************************************************/
 CREATE TABLE pgmd_coord (
   inc       serial NOT NULL,
   lat       real,
@@ -80,13 +87,6 @@ CREATE TABLE pgmd_coord (
     REFERENCES ide_inf (inc) MATCH SIMPLE,
   CONSTRAINT pgmd_coord_grnd_fkey FOREIGN KEY (grnd)
       REFERENCES grnd(inc_grnd) MATCH SIMPLE
-  );
-/******************************************************************************/
-CREATE TABLE grnd (
-  inc_grnd  serial NOT NULL,
-  name   varchar(50) NOT NULL,
-  CONSTRAINT grnd1_pkey
-    PRIMARY KEY (inc_grnd)
   );
 /******************************************************************************/
 CREATE TABLE grnd_p (
